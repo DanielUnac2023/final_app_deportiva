@@ -21,17 +21,25 @@ import unac.edu.final_app_deportiva.model.Player
 import unac.edu.final_app_deportiva.model.Team
 import unac.edu.final_app_deportiva.network.RetrofitClient
 
+/**
+ * Actividad principal de la aplicación "RETRO FOOTBALL CLUB".
+ * Funciona como punto de control para la búsqueda de equipos, carga de plantillas
+ * de jugadores y tablas de posiciones, además de la interfaz del diálogo de detalle
+ * de jugadores con imagen en alta resolución.
+ */
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var etSearchTeam: EditText
-    private lateinit var btnSearch: Button
-    private lateinit var progressBar: ProgressBar
-    private lateinit var layoutTeamInfo: LinearLayout
-    private lateinit var tvTeamName: TextView
-    private lateinit var btnViewPlayers: Button
-    private lateinit var btnViewTable: Button
-    private lateinit var recyclerView: RecyclerView
+    // Componentes de la interfaz de usuario vinculados desde el layout XML
+    private lateinit var etSearchTeam: EditText   // Campo de búsqueda de equipo
+    private lateinit var btnSearch: Button       // Botón para buscar equipo
+    private lateinit var progressBar: ProgressBar // Indicador de carga de datos
+    private lateinit var layoutTeamInfo: LinearLayout  // Contenedor info del equipo encontrado
+    private lateinit var tvTeamName: TextView    // Texto con nombre del equipo
+    private lateinit var btnViewPlayers: Button  // Botón para ver plantilla de jugadores
+    private lateinit var btnViewTable: Button    // Botón para ver tabla de posiciones
+    private lateinit var recyclerView: RecyclerView // Lista para resultados en vista permanente
 
+    // Estado: el equipo actualmente seleccionado en la interfaz
     private var currentTeam: Team? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
