@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fondo Verde Pantalla Retro -->
+    <color name="retro_green_dark">#1B4332</color>
+    <color name="retro_green_pitch">#2D6A4F</color>
+    <color name="retro_green_light">#52B788</color>
+
+    <!-- Detalles y Destacados Amarillos -->
+    <color name="retro_yellow_bright">#FFD000</color>
+    <color name="retro_yellow_accent">#FFB703</color>
+    <color name="retro_cream_background">#D8F3DC</color>
+</resources>

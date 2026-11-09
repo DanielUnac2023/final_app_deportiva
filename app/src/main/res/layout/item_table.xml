@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Archivo XML de diseño para elementos de fila en la tabla de posiciones de la liga.
+     Crea una fila horizontal con columnas para clasificación, nombre de equipo,
+     juegos jugados y puntos. Utiliza colores temáticos retro para mejorar la
+     experiencia visual del usuario. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    Ganjina:
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:layout_marginVertical="2dp"
+    android:background="@color/retro_green_pitch">
+
+    <TextView
+        android:id="@+id/tvRank"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/retro_yellow_bright"
+        android:textStyle="bold"
+        android:text="1" />
+
+    <TextView
+        android:id="@+id/tvTableTeam"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@color/retro_cream_background"
+        android:textStyle="bold"
+        android:text="Equipo" />
+
+    <TextView
+        android:id="@+id/tvPlayed"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/retro_cream_background"
+        android:gravity="center"
+        android:text="PJ" />
+
+    <TextView
+        android:id="@+id/tvPoints"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/retro_yellow_bright"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="PTS" />
+</LinearLayout>
