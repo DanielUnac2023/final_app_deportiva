@@ -5,5 +5,10 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
+    <!-- Estilo de bordes redondeados para las fotos de los jugadores -->
+    <style name="RetroImageStyle">
+        <item name="cornerSize">12dp</item>
+    </style>
+
     <style name="Theme.Final_app_deportiva" parent="Base.Theme.Final_app_deportiva" />
 </resources>

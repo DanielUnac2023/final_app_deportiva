@@ -39,6 +39,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnViewTable: Button    // Botón para ver tabla de posiciones
     private lateinit var recyclerView: RecyclerView // Lista para resultados en vista permanente
 
+    private lateinit var layoutTableHeader: LinearLayout
+
     // Estado: el equipo actualmente seleccionado en la interfaz
     private var currentTeam: Team? = null
 
@@ -46,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 1. Vincular componentes de la vista XML
+        // 1. Vincular componentes de la vista XML (desde activity_main.xml)
         etSearchTeam = findViewById(R.id.etSearchTeam)
         btnSearch = findViewById(R.id.btnSearch)
         progressBar = findViewById(R.id.progressBar)
@@ -55,14 +57,16 @@ class MainActivity : AppCompatActivity() {
         btnViewPlayers = findViewById(R.id.btnViewPlayers)
         btnViewTable = findViewById(R.id.btnViewTable)
         recyclerView = findViewById(R.id.recyclerView)
+        layoutTableHeader = findViewById(R.id.layoutTableHeader)
 
+        // Configura como Vertical Manager el RecyclerView para mostrar listas
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // 2. Acción del botón BUSCAR (API searchteams.php)
+        // 2. Acción del botón BUSCAR: llama a API searchteams.php para encontrar un equipo
         btnSearch.setOnClickListener {
-            val query = etSearchTeam.text.toString().trim()
-            if (query.isNotEmpty()) {
-                searchTeam(query)
+            val query = etSearchTeam.text.toString().trim() // Limpia y obtiene la búsqueda
+            if (query.isNotEmpty()) {                      // Verifica que no esté vacío
+                searchTeam(query)                          // Llama al método interno
             } else {
                 Toast.makeText(this, "Ingresa un nombre de equipo", Toast.LENGTH_SHORT).show()
             }
@@ -70,84 +74,87 @@ class MainActivity : AppCompatActivity() {
 
         // 3. Acción para ver la Plantilla de Jugadores (API lookup_all_players.php)
         btnViewPlayers.setOnClickListener {
-            currentTeam?.idTeam?.let { teamId ->
-                loadPlayers(teamId)
+            currentTeam?.idTeam?.let { teamId ->           // Obtiene ID del equipo
+                loadPlayers(teamId)                        // Carga la plantilla
             }
         }
 
         // 4. Acción para ver la Tabla de Posiciones (API lookuptable.php)
         btnViewTable.setOnClickListener {
-            currentTeam?.idLeague?.let { leagueId ->
-                loadLeagueTable(leagueId)
+            currentTeam?.idLeague?.let { leagueId ->       // Obtiene ID de la liga
+                loadLeagueTable(leagueId)                  // Carga la tabla
             }
         }
     }
 
     private fun searchTeam(teamName: String) {
-        progressBar.visibility = View.VISIBLE
-        layoutTeamInfo.visibility = View.GONE
-        recyclerView.adapter = null
+        progressBar.visibility = View.VISIBLE   // Muestra el indicador de carga
+        layoutTeamInfo.visibility = View.GONE   // Oculta la info temporal del equipo
+        recyclerView.adapter = null            // Desactiva los adapters anteriores
+        layoutTableHeader.visibility = View.GONE
 
-        lifecycleScope.launch {
+        lifecycleScope.launch {                // Lanzamiento de corrutina principal
             try {
                 val response = RetrofitClient.apiService.searchTeams(teamName)
-                progressBar.visibility = View.GONE
+                progressBar.visibility = View.GONE   // Oculta indicador al finalizar
 
                 val teamList = response.teams
-                if (!teamList.isNullOrEmpty()) {
-                    currentTeam = teamList[0]
-                    tvTeamName.text = currentTeam?.strTeam
-                    layoutTeamInfo.visibility = View.VISIBLE
+                if (!teamList.isNullOrEmpty()) {    // Verifica que existan resultados
+                    currentTeam = teamList[0]       // Guarda el primer equipo encontrado
+                    tvTeamName.text = currentTeam?.strTeam // Muestra nombre del equipo
+                    layoutTeamInfo.visibility = View.VISIBLE  // Visible la info temporal
                     Toast.makeText(this@MainActivity, "Equipo encontrado", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this@MainActivity, "No se encontró el equipo", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                progressBar.visibility = View.GONE
+                progressBar.visibility = View.GONE  // Oculta indicador en caso de error
                 Toast.makeText(this@MainActivity, "Error: ${e.message}", Toast.LENGTH_LONG).show()
             }
         }
     }
 
     private fun loadPlayers(teamId: String) {
-        progressBar.visibility = View.VISIBLE
+        progressBar.visibility = View.VISIBLE   // Muestra el indicador de carga
+        layoutTableHeader.visibility = View.GONE
 
-        lifecycleScope.launch {
+        lifecycleScope.launch {                // Lanzamiento de corrutina principal
             try {
                 val response = RetrofitClient.apiService.getPlayersByTeam(teamId)
-                progressBar.visibility = View.GONE
+                progressBar.visibility = View.GONE   // Oculta indicador al finalizar
 
-                val players = response.player
-                if (!players.isNullOrEmpty()) {
-                    recyclerView.adapter = PlayerAdapter(players) { selectedPlayer ->
-                        showPlayerDetailDialog(selectedPlayer)
+                val players = response.player      // Obtiene la lista de jugadores
+                if (!players.isNullOrEmpty()) {    // Verifica que existan jugadores
+                    recyclerView.adapter = PlayerAdapter(players) { selectedPlayer ->  // Inicializa adaptador
+                        showPlayerDetailDialog(selectedPlayer)                            // Muestra diálogo de detalle
                     }
                 } else {
                     Toast.makeText(this@MainActivity, "No hay jugadores registrados", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                progressBar.visibility = View.GONE
+                progressBar.visibility = View.GONE  // Oculta indicador en caso de error
                 Toast.makeText(this@MainActivity, "Error al cargar jugadores", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun loadLeagueTable(leagueId: String) {
-        progressBar.visibility = View.VISIBLE
+        progressBar.visibility = View.VISIBLE   // Muestra el indicador de carga
+        layoutTableHeader.visibility = View.VISIBLE
 
-        lifecycleScope.launch {
+        lifecycleScope.launch {                // Lanzamiento de corrutina principal
             try {
                 val response = RetrofitClient.apiService.getLeagueTable(leagueId)
-                progressBar.visibility = View.GONE
+                progressBar.visibility = View.GONE   // Oculta indicador al finalizar
 
-                val table = response.table
-                if (!table.isNullOrEmpty()) {
-                    recyclerView.adapter = TableAdapter(table)
+                val table = response.table       // Obtiene la tabla de posiciones
+                if (!table.isNullOrEmpty()) {    // Verifica que existan filas
+                    recyclerView.adapter = TableAdapter(table)  // Inicializa adaptador tabla
                 } else {
                     Toast.makeText(this@MainActivity, "Tabla no disponible para esta liga", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                progressBar.visibility = View.GONE
+                progressBar.visibility = View.GONE  // Oculta indicador en caso de error
                 Toast.makeText(this@MainActivity, "Error al cargar la tabla", Toast.LENGTH_SHORT).show()
             }
         }

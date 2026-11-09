@@ -47,4 +47,6 @@ dependencies {
 
     // Coil para cargar las fotos de los jugadores desde URL
     implementation("io.coil-kt:coil:2.6.0")
+
+    implementation("com.google.android.material:material:1.11.0")
 }

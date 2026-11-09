@@ -1,48 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Archivo XML de diseño para elementos de fila en la tabla de posiciones de la liga.
-     Crea una fila horizontal con columnas para clasificación, nombre de equipo,
-     juegos jugados y puntos. Utiliza colores temáticos retro para mejorar la
-     experiencia visual del usuario. -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Fila estilizada de la tabla de posiciones con estilo marcador retro -->
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    Ganjina:
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="10dp"
-    android:layout_marginVertical="2dp"
-    android:background="@color/retro_green_pitch">
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="3dp"
+    app:cardBackgroundColor="@color/retro_green_pitch"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="3dp"
+    app:strokeColor="@color/retro_yellow_accent"
+    app:strokeWidth="1dp">
 
-    <TextView
-        android:id="@+id/tvRank"
-        android:layout_width="30dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/retro_yellow_bright"
-        android:textStyle="bold"
-        android:text="1" />
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/tvTableTeam"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textColor="@color/retro_cream_background"
-        android:textStyle="bold"
-        android:text="Equipo" />
+        <!-- Posición / Ranking -->
+        <TextView
+            android:id="@+id/tvRank"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/retro_yellow_bright"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="1" />
 
-    <TextView
-        android:id="@+id/tvPlayed"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:textColor="@color/retro_cream_background"
-        android:gravity="center"
-        android:text="PJ" />
+        <!-- Separador vertical retro -->
+        <View
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:background="@color/retro_yellow_accent"
+            android:layout_marginEnd="10dp" />
 
-    <TextView
-        android:id="@+id/tvPoints"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:textColor="@color/retro_yellow_bright"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:text="PTS" />
-</LinearLayout>
+        <!-- Nombre del Equipo -->
+        <TextView
+            android:id="@+id/tvTableTeam"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/retro_cream_background"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="Equipo" />
+
+        <!-- Partidos Jugados (PJ) -->
+        <TextView
+            android:id="@+id/tvPlayed"
+            android:layout_width="42dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/retro_cream_background"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:text="PJ" />
+
+        <!-- Puntos (PTS) -->
+        <TextView
+            android:id="@+id/tvPoints"
+            android:layout_width="46dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/retro_yellow_bright"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="PTS" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="40dp"
     android:background="@color/retro_green_dark">
 
     <!-- Título Retro -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="RETRO FOOTBALL CLUB"
+        android:text="FOOTBALL CLUB"
         android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="@color/retro_yellow_bright"
@@ -103,6 +103,55 @@
                 android:textColor="@color/retro_green_dark"
                 android:layout_marginStart="4dp" />
         </LinearLayout>
+    </LinearLayout>
+
+    <!-- Encabezado de Columnas para la Tabla (Retro Header) -->
+    <LinearLayout
+        android:id="@+id/layoutTableHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="8dp"
+        android:background="@color/retro_green_dark"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:text="POS"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/retro_yellow_bright"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="11dp"
+            android:text="EQUIPO"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/retro_yellow_bright" />
+
+        <TextView
+            android:layout_width="42dp"
+            android:layout_height="wrap_content"
+            android:text="PJ"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/retro_yellow_bright"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="46dp"
+            android:layout_height="wrap_content"
+            android:text="PTS"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/retro_yellow_bright"
+            android:gravity="center" />
     </LinearLayout>
 
     <!-- RecyclerView para la lista de resultados -->
